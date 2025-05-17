@@ -1,0 +1,25 @@
+# Node.js / npm
+node_modules/
+npm-debug.log*
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Archives
+*.zip
+*.rar
+*.7z
+
+# Env
+.env
