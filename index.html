@@ -15,15 +15,15 @@
             margin: 0;
             padding: 0;
         }
+        /* Основний градієнт для темної теми — синьо-жовтий */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #003300 20%, #1a4d1a 50%, #004d00 80%, #2a2a2a 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #0057b7 0%, #80deea 30%, #ffd700 60%, #003087 100%);
             color: #e0e0e0;
             transition: background 0.5s ease, color 0.5s ease;
         }
+        /* Основний градієнт для світлої теми — бірюзово-жовтий */
         body.day-mode {
-            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 30%, #ffca28 60%, #b3e5fc 100%);
+            background: linear-gradient(135deg, #26A69A 0%, #80CBC4 30%, #FFCA28 60%, #00897B 100%);
             color: #1a1a1a;
         }
         /* Теми та градієнти */
@@ -81,6 +81,7 @@
             border-bottom: 2px solid #90a4ae;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        /* Градієнт заголовка залежно від теми */
         header h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
@@ -95,19 +96,39 @@
             display: inline-block;
             animation: gradientFlow 6s ease infinite;
             background-size: 200% 200%;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.5s;
+            filter: none !important;
+            backdrop-filter: none !important;
+        }
+        /* Прибрати ефекти для header h1 */
+        header h1 {
+            background: none !important;
+            color: #0057b7 !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            text-shadow: none !important;
+            animation: none !important;
+            filter: none !important;
+            backdrop-filter: none !important;
+            transition: none !important;
+        }
+        body.blue-yellow header h1 {
+            background: linear-gradient(45deg, #0057b7, #ffd700, #003087);
+            background-size: 200% 200%;
+        }
+        body.teal-yellow header h1,
+        body.day-mode header h1 {
+            background: linear-gradient(45deg, #00897B, #FFD54F, #26A69A);
+            background-size: 200% 200%;
+        }
+        body.custom-bg header h1 {
+            background: linear-gradient(45deg, var(--modal-bg, #333), #FFD54F, #26A69A);
+            background-size: 200% 200%;
         }
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
-        }
-        header.day-mode h1 {
-            background: linear-gradient(45deg, #00897B, #FFD54F, #26A69A);
-            text-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
-        }
-        header h1:hover {
-            transform: scale(1.05);
         }
         header p {
             font-size: 1rem;
@@ -140,22 +161,24 @@
             transform: scale(1.1);
         }
         .card-body {
-            background: rgba(0, 51, 0, 0.8);
+            background: rgba(0, 87, 183, 0.45);
             color: #e0e0e0;
             text-align: center;
             padding: 1rem;
             font-family: 'Poppins', sans-serif;
+            border-radius: 0.7rem;
+            transition: background 0.3s;
         }
         .card.day-mode .card-body {
-            background: rgba(0, 87, 183, 0.4);
+            background: rgba(38, 166, 154, 0.35);
             color: #1a1a1a;
         }
-        [class*="blue-yellow"] .card-body { background: rgba(0, 87, 183, 0.8); }
+        [class*="blue-yellow"] .card-body { background: rgba(0, 87, 183, 0.45); }
         [class*="red-black"] .card-body { background: rgba(75, 0, 0, 0.8); }
-        [class*="teal-yellow"] .card-body { background: rgba(38, 166, 154, 0.8); }
-        [class*="blue-yellow"] .card.day-mode .card-body { background: rgba(0, 87, 183, 0.4); }
+        [class*="teal-yellow"] .card-body { background: rgba(38, 166, 154, 0.45); }
+        [class*="blue-yellow"] .card.day-mode .card-body { background: rgba(0, 87, 183, 0.35); }
         [class*="red-black"] .card.day-mode .card-body { background: rgba(75, 0, 0, 0.4); }
-        [class*="teal-yellow"] .card.day-mode .card-body { background: rgba(38, 166, 154, 0.4); }
+        [class*="teal-yellow"] .card.day-mode .card-body { background: rgba(38, 166, 154, 0.35); }
         .card:hover {
             transform: translateY(-0.5rem);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -272,26 +295,8 @@
         [class*="red-black"] .emergency-button:hover { background: #3d0000; }
         [class*="teal-yellow"] .emergency-button { background: #26A69A; }
         [class*="teal-yellow"] .emergency-button:hover { background: #00897B; }
-        .theme-options, .gradient-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-        .theme-option, .gradient-option {
-            width: 5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border 0.3s ease, transform 0.3s ease;
-        }
-        .theme-option:hover, .gradient-option:hover {
-            border: 2px solid #e0e0e0;
-            transform: scale(1.05);
-        }
-        .theme-option.selected, .gradient-option.selected {
-            border: 2px solid #FFCA28;
+        .theme-options, .gradient-options, .theme-option, .gradient-option, #themeModal {
+            display: none !important;
         }
         .theme-option.green-black { background: linear-gradient(135deg, #1a1a1a 0%, #003300 20%, #1a4d1a 50%, #004d00 80%, #2a2a2a 100%); }
         .theme-option.blue-yellow { background: linear-gradient(135deg, #0057b7 0%, #80deea 30%, #ffd700 60%, #003087 100%); }
@@ -299,7 +304,7 @@
         .theme-option.teal-yellow { background: linear-gradient(135deg, #26A69A 0%, #80CBC4 30%, #FFCA28 60%, #00897B 100%); }
         [class*="green-black"] { background: linear-gradient(var(--angle), #003300, #2a2a2a, #004d00); }
         .gradient-option.green-black-alt1 { --angle: 45deg; }
-        .gradient-option.green-black-alt2 { --angle: 90deg; background: linear-gradient(var(--angle), #1a4d1a, #003300, #1a1a1а); }
+        .gradient-option.green-black-alt2 { --angle: 90deg; background: linear-gradient(var(--angle), #1a4d1a, #003300, #1a1a1a); }
         .gradient-option.green-black-alt3 { --angle: 135deg; background: linear-gradient(var(--angle), #004d00, #1a1a1a, #003300); }
         .gradient-option.green-black-alt4 { --angle: 180deg; background: linear-gradient(var(--angle), #2a2a2a, #1a4d1a, #004d00); }
         .gradient-option.green-black-alt5 { --angle: 45deg; background: linear-gradient(var(--angle), #003300, #1a4d1a, #2a2a2a); }
@@ -366,7 +371,7 @@
             display: flex;
             justify-content: space-between;
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 3рем;
             flex-wrap: wrap;
         }
         .project-section, .stats-section {
@@ -427,14 +432,17 @@
             flex-direction: column;
             align-items: center;
             gap: 1.5rem;
+            max-width: 900px !important;
+            min-width: 340px;
+            width: 90% !important;
         }
         .chart-container {
-            width: 100%;
-            max-width: 420px;
-            min-width: 260px;
-            aspect-ratio: 1.2/1;
-            min-height: 260px;
-            max-height: 340px;
+            width: 100% !important;
+            max-width: 700px !important;
+            min-width: 320px;
+            aspect-ratio: 1.5/1;
+            min-height: 320px;
+            max-height: 440px;
             margin: 0 auto 1.5rem auto;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 0.75rem;
@@ -574,6 +582,895 @@
             .card-title { font-size: 1.1rem; }
             .modal-body { font-size: 1rem; }
         }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 0;
+            background: rgba(38, 166, 154, 0.97);
+            box-shadow: 2px 0 16px rgba(0,0,0,0.25);
+            overflow-x: hidden;
+            transition: width 0.3s cubic-bezier(.4,2,.6,1);
+            z-index: 1200;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .sidebar.open {
+            width: 270px;
+        }
+        .sidebar-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: -2.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #26A69A;
+            color: #fff;
+            border: none;
+            border-radius: 0 0.75rem 0.75rem 0;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1201;
+            transition: background 0.3s;
+        }
+        .sidebar-toggle:hover {
+            background: #00897B;
+        }
+        .sidebar-content {
+            margin-top: 4.5rem;
+            width: 100%;
+            padding: 1.5rem 1rem 1rem 1.5rem;
+            display: none;
+        }
+        .sidebar.open .sidebar-content {
+            display: block;
+        }
+        .sidebar-content h3 {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: background 0.2s, border 0.2s;
+            border-radius: 0.6rem;
+            padding: 0.6rem 0.7rem;
+            border: 3px solid transparent;
+            cursor: pointer;
+            background: rgba(0, 87, 183, 0.85); /* синьо-жовтий для темної */
+            color: #fff;
+            min-width: 210px;
+            min-height: 72px;
+            font-size: 1.2rem;
+        }
+        body.day-mode .sidebar-list li {
+            background: rgba(38, 166, 154, 0.85); /* бірюзово-жовтий для світлої */
+            color: #222;
+        }
+        .sidebar-list li:hover,
+        .sidebar-list li.selected,
+        .sidebar-list li:active {
+            background: #fff;
+            color: #222;
+            border: 3px solid #FFCA28;
+        }
+        .sidebar-list li.selected a,
+        .sidebar-list li:active a {
+            color: #000;
+            font-weight: bold;
+        }
+        .sidebar-list .participant-photo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #eee;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+            transition: border 0.2s, box-shadow 0.2s;
+            flex-shrink: 0;
+        }
+        .sidebar-list li a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            display: block;
+            padding: 0.2rem 0.5rem;
+            transition: color 0.2s;
+            flex: 1;
+        }
+        .sidebar-list li:hover .participant-photo,
+        .sidebar-list li.selected .participant-photo,
+        .sidebar-list li:active .participant-photo {
+            border: 2px solid #FFCA28;
+            box-shadow: 0 2px 8px rgba(255,202,40,0.25);
+        }
+        /* Оформлення модального вікна учасника */
+        .participant-modal-body {
+            background: inherit;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+        }
+        .participant-modal-flex {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0.5rem 0;
+        }
+        .participant-modal-photo {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #f5f5f5;
+            border: 2.5px solid #FFCA28;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            flex-shrink: 0;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .participant-modal-flex > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .participant-modal-name {
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 0.3rem;
+            color: #FFCA28;
+            font-weight: 600;
+        }
+        body.day-mode .participant-modal-name {
+            color: #00897B;
+        }
+        .participant-modal-body h6 {
+            margin-top: 0.1rem;
+            color: #fff;
+            font-size: 1rem;
+        }
+        body.day-mode .participant-modal-body h6 {
+            color: #1a1a1a;
+        }
+        @media (max-width: 600px) {
+            .participant-modal-flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.7rem;
+            }
+            .participant-modal-photo {
+                width: 54px;
+                height: 54px;
+            }
+        }
+
+        /* Кольори модальних вікон і карток під тему */
+        .modal-content,
+        .card,
+        .project-section,
+        .stats-section {
+            background: rgba(0, 87, 183, 0.12);
+            transition: background 0.4s;
+        }
+        body.day-mode .modal-content,
+        body.day-mode .card,
+        body.day-mode .project-section,
+        body.day-mode .stats-section {
+            background: rgba(38, 166, 154, 0.10);
+        }
+        body.blue-yellow .modal-content,
+        body.blue-yellow .card,
+        body.blue-yellow .project-section,
+        body.blue-yellow .stats-section {
+            background: rgba(0, 87, 183, 0.12);
+        }
+        body.teal-yellow .modal-content,
+        body.teal-yellow .card,
+        body.teal-yellow .project-section,
+        body.teal-yellow .stats-section {
+            background: rgba(38, 166, 154, 0.10);
+        }
+        .card-title, .project-section h2, .stats-section h2 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            color: #FFCA28;
+            transition: color 0.3s;
+        }
+        body.day-mode .card-title,
+        body.day-mode .project-section h2,
+        body.day-mode .stats-section h2 {
+            color: #00897B;
+        }
+        body.blue-yellow .card-title,
+        body.blue-yellow .project-section h2,
+        body.blue-yellow .stats-section h2 {
+            color: #FFCA28;
+        }
+        body.teal-yellow .card-title,
+        body.teal-yellow .project-section h2,
+        body.teal-yellow .stats-section h2 {
+            color: #00897B;
+        }
+
+        /* --- Підписи в роботі проекту (наприклад, .card-body) --- */
+        .card-body {
+            background: rgba(0, 87, 183, 0.45); /* синьо-жовтий для темної */
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 0.7rem;
+            transition: background 0.3s;
+        }
+        body.day-mode .card-body {
+            background: rgba(38, 166, 154, 0.35); /* бірюзово-жовтий для світлої */
+            color: #1a1a1a;
+        }
+        body.blue-yellow .card-body,
+        body.blue-yellow-alt1 .card-body,
+        body.blue-yellow-alt2 .card-body,
+        body.blue-yellow-alt3 .card-body,
+        body.blue-yellow-alt4 .card-body,
+        body.blue-yellow-alt5 .card-body,
+        body.blue-yellow-alt6 .card-body {
+            background: rgba(0, 87, 183, 0.45);
+            color: #fff;
+        }
+        body.teal-yellow .card-body,
+        body.teal-yellow-alt1 .card-body,
+        body.teal-yellow-alt2 .card-body,
+        body.teal-yellow-alt3 .card-body,
+        body.teal-yellow-alt4 .card-body,
+        body.teal-yellow-alt5 .card-body,
+        body.teal-yellow-alt6 .card-body {
+            background: rgba(38, 166, 154, 0.35);
+            color: #1a1a1a;
+        }
+
+        /* --- Модальні вікна: повністю непрозорі, колір теми --- */
+        .modal-content {
+            background: #003087 !important; /* дефолт для синьо-жовтої */
+            color: #fff;
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            transition: background 0.3s, color 0.3s;
+            opacity: 1 !important;
+        }
+        body.day-mode .modal-content {
+            background: #e0f7fa !important;
+            color: #1a1a1a;
+        }
+        body.blue-yellow .modal-content,
+        body.blue-yellow-alt1 .modal-content,
+        body.blue-yellow-alt2 .modal-content,
+        body.blue-yellow-alt3 .modal-content,
+        body.blue-yellow-alt4 .modal-content,
+        body.blue-yellow-alt5 .modal-content,
+        body.blue-yellow-alt6 .modal-content {
+            background: #003087 !important;
+            color: #fff;
+        }
+        body.teal-yellow .modal-content,
+        body.teal-yellow-alt1 .modal-content,
+        body.teal-yellow-alt2 .modal-content,
+        body.teal-yellow-alt3 .modal-content,
+        body.teal-yellow-alt4 .modal-content,
+        body.teal-yellow-alt5 .modal-content,
+        body.teal-yellow-alt6 .modal-content {
+            background: #00897B !important;
+            color: #fff;
+        }
+
+        /* --- Статистика проекту: сучасний вигляд, більше місця, плавні тіні --- */
+        .stats-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.2rem;
+            max-width: 1100px !important;
+            min-width: 340px;
+            width: 98% !important;
+            background: rgba(0, 87, 183, 0.10);
+            border: 2.5px solid #FFCA28;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+            border-radius: 1.7rem;
+            padding: 3рем 2рем 2.5рем 2рем;
+            margin-bottom: 2.5рем;
+            transition: background 0.4s, border 0.4s;
+        }
+        body.day-mode .stats-section,
+        body.teal-yellow .stats-section {
+            background: rgba(38, 166, 154, 0.08);
+            border-color: #00897B;
+        }
+        .stats-section h2 {
+            font-size: 2.2рем;
+            color: #FFCA28;
+            letter-spacing: 1px;
+            margin-bottom: 1.7рем;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body.day-mode .stats-section h2,
+        body.teal-yellow .stats-section h2 {
+            color: #00897B;
+        }
+        .chart-container {
+            width: 100% !important;
+            max-width: 900px !important;
+            min-width: 320px;
+            aspect-ratio: 2/1;
+            min-height: 340px;
+            max-height: 520px;
+            margin: 0 auto 1.5рем auto;
+            background: rgba(255, 255, 255, 0.13);
+            border-radius: 1.3рем;
+            padding: 2рем;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .chart-caption {
+            text-align: center;
+            color: #FFCA28;
+            font-size: 1.25рем;
+            margin-top: 0.9рем;
+            min-height: 1.7рем;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        body.day-mode .chart-caption,
+        body.teal-yellow .chart-caption {
+            color: #00897B;
+        }
+        .chart-type-btn {
+            border: none;
+            background: #fff;
+            color: #0057b7;
+            border-radius: 0.7рем;
+            padding: 0.7рем 1.5рем;
+            font-size: 1.1рем;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0 0.3рем;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .chart-type-btn.active,
+        .chart-type-btn:hover {
+            background: #FFCA28;
+            color: #222;
+            font-weight: bold;
+            box-shadow: 0 4px 16px rgba(255,202,40,0.13);
+        }
+        body.day-mode .chart-type-btn.active,
+        body.day-mode .chart-type-btn:hover,
+        body.teal-yellow .chart-type-btn.active,
+        body.teal-yellow .chart-type-btn:hover {
+            background: #00897B;
+            color: #fff;
+        }
+        .chart-arrow {
+            background: #FFCA28;
+            color: #0057b7;
+            border: none;
+            border-radius: 50%;
+            width: 3.2рем;
+            height: 3.2рем;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5рем;
+            cursor: pointer;
+            transition: background 0.3s, color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(255,202,40,0.13);
+        }
+        .chart-arrow:hover {
+            background: #0057b7;
+            color: #FFCA28;
+            transform: scale(1.1);
+        }
+        body.day-mode .chart-arrow,
+        body.teal-yellow .chart-arrow {
+            background: #00897B;
+            color: #fff;
+        }
+        body.day-mode .chart-arrow:hover,
+        body.teal-yellow .chart-arrow:hover {
+            background: #FFCA28;
+            color: #00897B;
+        }
+
+        /* --- Модальні вікна учасників: більші, сучасні --- */
+        .modal-dialog.modal-md {
+            max-width: 520px;
+        }
+        @media (max-width: 600px) {
+            .modal-dialog.modal-md {
+                max-width: 98vw;
+            }
+        }
+        .participant-modal-body {
+            padding: 2.2рем 2рем 2рем 2рем;
+        }
+        .participant-modal-flex {
+            display: flex;
+            align-items: center;
+            gap: 2рем;
+            padding: 0.5рем 0;
+        }
+        .participant-modal-photo {
+            width: 92px;
+            height: 92px;
+            border-radius: 16px;
+            object-fit: cover;
+            background: #f5f5f5;
+            border: 3px solid #FFCA28;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            flex-shrink: 0;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .participant-modal-flex > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .participant-modal-name {
+            font-size: 1.3рем;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 0.5рем;
+            color: #FFCA28;
+            font-weight: 600;
+        }
+        body.day-mode .participant-modal-name,
+        body.teal-yellow .participant-modal-name {
+            color: #00897B;
+        }
+        .participant-modal-body h6 {
+            margin-top: 0.1рем;
+            color: #fff;
+            font-size: 1.1рем;
+        }
+        body.day-mode .participant-modal-body h6,
+        body.teal-yellow .participant-modal-body h6 {
+            color: #1a1a1a;
+        }
+        @media (max-width: 600px) {
+            .participant-modal-flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1рем;
+            }
+            .participant-modal-photo {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        /* --- Обрамлення для и проекту та статистики залежно від теми --- */
+        .project-section {
+            border: 3px solid #0057b7; /* синя рамка за замовчуванням */
+            background: rgba(0, 87, 183, 0.10);
+            border-radius: 1.7рем;
+            transition: border 0.4s, background 0.4s;
+        }
+        .stats-section {
+            border: 3px solid #FFCA28; /* жовта рамка за замовчуванням */
+            background: rgba(0, 87, 183, 0.10);
+            border-radius: 1.7рем;
+            transition: border 0.4s, background 0.4s;
+            max-width: 1200px !important;
+            width: 99% !important;
+            padding: 3.2рем 2.2рем 2.7рем 2.2рем;
+        }
+        body.day-mode .project-section,
+        body.teal-yellow .project-section {
+            border-color: #00897B; /* бірюзова рамка */
+            background: rgba(38, 166, 154, 0.08);
+        }
+        body.day-mode .stats-section,
+        body.teal-yellow .stats-section {
+            border-color: #FFCA28; /* жовта рамка */
+            background: rgba(38, 166, 154, 0.08);
+        }
+        body.blue-yellow .project-section {
+            border-color: #0057b7;
+        }
+        body.blue-yellow .stats-section {
+            border-color: #FFCA28;
+        }
+        body.teal-yellow .project-section {
+            border-color: #00897B;
+        }
+        body.teal-yellow .stats-section {
+            border-color: #FFCA28;
+        }
+        body.custom-bg .project-section {
+            border-color: #333; /* fallback для кастомного кольору */
+        }
+        body.custom-bg .stats-section {
+            border-color: #FFCA28;
+        }
+
+        /* --- Підписи в статистиці: рівняємо по центру, робимо більшими --- */
+        .stats-section h2,
+        .stats-section .chart-caption {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .stats-section h2 {
+            font-size: 2.4рем;
+            margin-bottom: 2рем;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .chart-caption {
+            font-size: 1.3рем;
+            margin-top: 1.1рем;
+            min-height: 2рем;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* --- Адаптивність для великих екранів --- */
+        @media (min-width: 1400px) {
+            .stats-section {
+                max-width: 1400px !important;
+                padding: 3.5рем 3рем 3рем 3рем;
+            }
+            .project-section {
+                max-width: 900px;
+            }
+        }
+
+        /* --- Однаковий розмір для .project-section і .stats-section --- */
+        .project-section,
+        .stats-section {
+            max-width: 1100px !important;
+            width: 98% !important;
+            min-width: 340px;
+            border-radius: 1.7рем;
+            padding: 3рем 2рем 2.5рем 2рем;
+            margin-bottom: 2.5рем;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Діаграми більші --- */
+        .chart-container {
+            width: 100% !important;
+            max-width: 950px !important;
+            min-width: 320px;
+            aspect-ratio: 2.2/1;
+            min-height: 420px;
+            max-height: 600px;
+            margin: 0 auto 1.5рем auto;
+            background: rgba(255, 255, 255, 0.13);
+            border-radius: 1.3рем;
+            padding: 2.5рем;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.4s;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* --- Адаптивність для великих екранів --- */
+        @media (min-width: 1400px) {
+            .stats-section, .project-section {
+                max-width: 1400px !important;
+                padding: 3.5рем 3рем 3рем 3рем;
+            }
+        }
+
+        /* --- та проекту: заголовок по центру і великими літерами --- */
+        .project-section h2 {
+            text-align: center;
+            font-size: 2.4рем;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2рем;
+            color: #FFCA28;
+        }
+        body.day-mode .project-section h2,
+        body.teal-yellow .project-section h2 {
+            color: #00897B;
+        }
+
+        /* --- Модальні вікна роботи проекту: колір теми, непрозорі --- */
+        #lawsModal .modal-content,
+        #presentationModal .modal-content,
+        #arrestsModal .modal-content,
+        #warImpactModal .modal-content {
+            background: #003087 !important;
+            color: #fff;
+            border-radius: 1рем;
+            border: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            opacity: 1 !important;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.day-mode #lawsModal .modal-content,
+        body.day-mode #presentationModal .modal-content,
+        body.day-mode #arrestsModal .modal-content,
+        body.day-mode #warImpactModal .modal-content,
+        body.teal-yellow #lawsModal .modal-content,
+        body.teal-yellow #presentationModal .modal-content,
+        body.teal-yellow #arrestsModal .modal-content,
+        body.teal-yellow #warImpactModal .modal-content {
+            background: #00897B !important;
+            color: #fff;
+        }
+        body.blue-yellow #lawsModal .modal-content,
+        body.blue-yellow #presentationModal .modal-content,
+        body.blue-yellow #arrestsModal .modal-content,
+        body.blue-yellow #warImpactModal .modal-content {
+            background: #003087 !important;
+            color: #fff;
+        }
+
+        /* --- Заголовок "Робота проекту" як у статистики --- */
+        .project-section h2 {
+            text-align: center;
+            font-size: 2.4рем;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2рем;
+            color: #FFCA28;
+        }
+        body.day-mode .project-section h2,
+        body.teal-yellow .project-section h2 {
+            color: #00897B;
+        }
+
+        /* --- Діаграми: ширші, але трохи нижчі --- */
+        .chart-container {
+            width: 100% !important;
+            max-width: 1100px !important;
+            min-width: 320px;
+            aspect-ratio: 2.7/1;
+            min-height: 260px;
+            max-height: 370px;
+            margin: 0 auto 1.5рем auto;
+            background: rgba(255, 255, 255, 0.13);
+            border-radius: 1.3рем;
+            padding: 2рем;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.4s;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* --- Модальні вікна: колір теми або кастомний --- */
+        .modal-content {
+            background: var(--modal-bg, #003087) !important;
+            color: var(--modal-color, #fff) !important;
+            border-radius: 1рем;
+            border: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            opacity: 1 !important;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.day-mode .modal-content,
+        body.teal-yellow .modal-content {
+            --modal-bg: #00897B;
+            --modal-color: #fff;
+        }
+        body.blue-yellow .modal-content {
+            --modal-bg: #003087;
+            --modal-color: #fff;
+        }
+        /* Кастомний колір для модальних вікон */
+        body.custom-bg .modal-content {
+            /* JS буде підставляти ці змінні */
+            background: var(--modal-bg, #333) !important;
+            color: var(--modal-color, #fff) !important;
+        }
+
+        /* Виправлення одиниць вимірювання: замініть всі "рем" на "rem" */
+
+        /* Виправлення кольору: кирилична "а" у #1a1a1а → #1a1a1a */
+        body.day-mode .participant-modal-body h6,
+        body.day-mode .card-body,
+        body.day-mode .modal-content {
+            color: #1a1a1a;
+        }
+        body.day-mode .card-body {
+            background: rgba(38, 166, 154, 0.35);
+        }
+
+        /* Виправлення кольору: кирилична "а" у #1a1a1а → #1a1a1a */
+        body.day-mode .participant-modal-name,
+        body.teal-yellow .participant-modal-name {
+            color: #00897B;
+        }
+
+        /* Додайте або замініть цей блок у <style> для покращення вигляду модальних вікон учасників */
+        .participant-modal-custom,
+        .modal-content.participant-modal-custom {
+            background: linear-gradient(135deg, #fffbe7 0%, #e3f2fd 100%);
+            color: #222;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,87,183,0.13), 0 2px 16px rgba(255,202,40,0.09);
+            border: 2.5px solid #FFCA28;
+            padding: 0;
+            animation: fadeInModal 0.5s;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.97);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        body.day-mode .participant-modal-custom,
+        body.teal-yellow .participant-modal-custom {
+            background: linear-gradient(135deg, #e0f7fa 0%, #fffde7 100%);
+            color: #00897B;
+            border-color: #00897B;
+        }
+        body.blue-yellow .participant-modal-custom {
+            background: linear-gradient(135deg, #e3f2fd 0%, #fffbe7 100%);
+            color: #003087;
+            border-color: #0057b7;
+        }
+        .participant-modal-body {
+            padding: 2.2rem 2рем 2рем 2рем;
+        }
+        .participant-modal-flex {
+            gap: 2.2rem;
+            align-items: flex-start;
+        }
+        .participant-modal-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 18px;
+            border: 3px solid #FFCA28;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+        .participant-modal-name {
+            font-size: 1.5rem;
+            color: #FFCA28;
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .participant-modal-body h6 {
+            font-size: 1.15rem;
+            color: #00897B;
+            margin-bottom: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .participant-modal-body p {
+            font-size: 1.08rem;
+            color: #222;
+            margin-bottom: 0.5рем;
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal-footer .btn-outline-secondary {
+            border-radius: 0.7рем;
+            font-size: 1.1рем;
+            padding: 0.5рем 1.3рем;
+            border: 2px solid #00897B;
+            color: #00897B;
+            background: #fff;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+        }
+        .modal-footer .btn-outline-secondary:hover {
+            background: #00897B;
+            color: #fff;
+            border-color: #FFCA28;
+        }
+        @media (max-width: 600px) {
+            .participant-modal-photo { width: 70px; height: 70px; }
+            .participant-modal-flex { gap: 1rem; flex-direction: column; }
+            .participant-modal-body { padding: 1.2рем 0.7рем 1рем 0.7рем; }
+        }
+
+        /* Логотип з градієнтом під тему/колір */
+        .theme-gradient-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #26A69A, #FFCA28, #00897B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.13);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            background-size: 200% 200%;
+            animation: gradientFlow 6s ease infinite;
+            transition: background 0.5s;
+        }
+        body.blue-yellow .theme-gradient-logo {
+            background: linear-gradient(45deg, #0057b7, #ffd700, #003087);
+        }
+        body.teal-yellow .theme-gradient-logo,
+        body.day-mode .theme-gradient-logo {
+            background: linear-gradient(45deg, #00897B, #FFD54F, #26A69A);
+        }
+        body.red-black .theme-gradient-logo {
+            background: linear-gradient(45deg, #4b0000, #ff3333, #2a2a2a);
+        }
+        body.green-black .theme-gradient-logo {
+            background: linear-gradient(45deg, #003300, #26A69A, #2a2a2a);
+        }
+        body.custom-bg .theme-gradient-logo {
+            background: linear-gradient(45deg, var(--modal-bg, #333), #FFD54F, #26A69A);
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Збільшити діаграму */
+        .chart-container {
+            width: 100% !important;
+            max-width: 1400px !important;
+            min-width: 320px;
+            aspect-ratio: 2.7/1;
+            min-height: 420px;
+            max-height: 700px;
+            margin: 0 auto 2rem auto;
+            background: rgba(255,255,255,0.13);
+            border-radius: 1.3rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.4s;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100%;
+            max-height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -584,9 +1481,12 @@
     </script>
 
     <header>
-        <h1>ФСМП 114 група: Протидія домашньому насильству</h1>
-        <p>Дата та час: 17 травня 2025, 10:47 EEST</p>
+        <h1 id="mainLogo" class="theme-gradient-logo">ФСМП 114 група: Протидія насильству</h1>
     </header>
+    <!-- ДОДАЙТЕ ЦЕЙ КНОПКУ ДЛЯ ВІДКРИТТЯ СЕНКИ ЗЛІВА -->
+    <button id="sidebarToggle" class="control-button" style="top: 5rem; left: 1rem; background: #26A69A; color: #fff; position: fixed; z-index: 1201;" title="Учасники проекту">
+        <i class="fas fa-users"></i>
+    </button>
 
     <button class="control-button emergency-button" data-bs-toggle="modal" data-bs-target="#emergencyModal" title="Екстрені контакти">
         <i class="fas fa-phone"></i>
@@ -597,6 +1497,62 @@
     <button class="control-button mode-button" title="Перемкнути режим">
         <i class="fas fa-moon"></i>
     </button>
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <h3>Учасники проекту</h3>
+            <ul class="sidebar-list">
+                <li>
+                    <img src="img/participants/dmytro.jpg" alt="Швалюк Дмитро" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal1">Швалюк Дмитро</a>
+                </li>
+                <li>
+                    <img src="img/participants/vladyslav.jpg" alt="Журавель Владислав" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal2">Журавель Владислав</a>
+                </li>
+                <li>
+                    <img src="img/participants/pavlo.jpg" alt="Снігур Павло" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal3">Снігур Павло</a>
+                </li>
+                <li>
+                    <img src="img/participants/maria.jpg" alt="Колосенко Марія" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal4">Колосенко Марія</a>
+                </li>
+                <li>
+                    <img src="img/participants/artem.jpg" alt="Чередниченко Артем" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal5">Чередниченко Артем</a>
+                </li>
+                <li>
+                    <img src="img/participants/anastasiia.jpg" alt="Мороз Анастасія" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal6">Мороз Анастасія</a>
+                </li>
+                <li>
+                    <img src="img/participants/yana.jpg" alt="Камінська Яна" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal7">Камінська Яна</a>
+                </li>
+                <li>
+                    <img src="img/participants/roman.jpg" alt="Ховращук Роман" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal8">Ховращук Роман</a>
+                </li>
+                <li>
+                    <img src="img/participants/albina.jpg" alt="Кучинська Альбіна" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal9">Кучинська Альбіна</a>
+                </li>
+                <li>
+                    <img src="img/participants/vadym.jpg" alt="Нечай Вадим" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal10">Нечай Вадим</a>
+                </li>
+                <li>
+                    <img src="img/participants/valeriia.jpg" alt="Чєрнеуцан Валерія" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal11">Чєрнеуцан Валерія</a>
+                </li>
+                <li>
+                    <img src="img/participants/mykola.jpg" alt="Ребдело Микола" class="participant-photo" onerror="this.style.display='none'">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#participantModal12">Ребдело Микола</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <div class="modal fade" id="emergencyModal" tabindex="-1" aria-labelledby="emergencyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -617,56 +1573,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="themeModal" tabindex="-1" aria-labelledby="themeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="themeModalLabel">Вибір теми</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>Основні теми</h6>
-                    <div class="theme-options">
-                        <div class="theme-option green-black" data-theme="green-black"></div>
-                        <div class="theme-option blue-yellow" data-theme="blue-yellow"></div>
-                        <div class="theme-option red-black" data-theme="red-black"></div>
-                        <div class="theme-option teal-yellow" data-theme="teal-yellow"></div>
-                    </div>
-                    <h6>Альтернативні градієнти</h6>
-                    <div class="gradient-options">
-                        <div class="gradient-option green-black-alt1" data-theme="green-black-alt1"></div>
-                        <div class="gradient-option green-black-alt2" data-theme="green-black-alt2"></div>
-                        <div class="gradient-option green-black-alt3" data-theme="green-black-alt3"></div>
-                        <div class="gradient-option green-black-alt4" data-theme="green-black-alt4"></div>
-                        <div class="gradient-option green-black-alt5" data-theme="green-black-alt5"></div>
-                        <div class="gradient-option green-black-alt6" data-theme="green-black-alt6"></div>
-                        <div class="gradient-option blue-yellow-alt1" data-theme="blue-yellow-alt1"></div>
-                        <div class="gradient-option blue-yellow-alt2" data-theme="blue-yellow-alt2"></div>
-                        <div class="gradient-option blue-yellow-alt3" data-theme="blue-yellow-alt3"></div>
-                        <div class="gradient-option blue-yellow-alt4" data-theme="blue-yellow-alt4"></div>
-                        <div class="gradient-option blue-yellow-alt5" data-theme="blue-yellow-alt5"></div>
-                        <div class="gradient-option blue-yellow-alt6" data-theme="blue-yellow-alt6"></div>
-                        <div class="gradient-option red-black-alt1" data-theme="red-black-alt1"></div>
-                        <div class="gradient-option red-black-alt2" data-theme="red-black-alt2"></div>
-                        <div class="gradient-option red-black-alt3" data-theme="red-black-alt3"></div>
-                        <div class="gradient-option red-black-alt4" data-theme="red-black-alt4"></div>
-                        <div class="gradient-option red-black-alt5" data-theme="red-black-alt5"></div>
-                        <div class="gradient-option red-black-alt6" data-theme="red-black-alt6"></div>
-                        <div class="gradient-option teal-yellow-alt1" data-theme="teal-yellow-alt1"></div>
-                        <div class="gradient-option teal-yellow-alt2" data-theme="teal-yellow-alt2"></div>
-                        <div class="gradient-option teal-yellow-alt3" data-theme="teal-yellow-alt3"></div>
-                        <div class="gradient-option teal-yellow-alt4" data-theme="teal-yellow-alt4"></div>
-                        <div class="gradient-option teal-yellow-alt5" data-theme="teal-yellow-alt5"></div>
-                        <div class="gradient-option teal-yellow-alt6" data-theme="teal-yellow-alt6"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   
     <div class="modal fade" id="lawsModal" tabindex="-1" aria-labelledby="lawsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -705,6 +1612,11 @@
                         <li>Аналіз роботи правоохоронних органів.</li>
                         <li>Рекомендації щодо підвищення обізнаності та підтримки жертв.</li>
                     </ul>
+                    <p>
+                        <a href="https://drive.google.com/file/d/1Gz-XtM7LYup3kZu2RQyqilZ2LSkl1iXm/view?usp=sharing" target="_blank" class="btn btn-warning mt-2">
+                            <i class="fas fa-file-powerpoint"></i> Переглянути презентацію (Google Drive)
+                        </a>
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
@@ -723,13 +1635,24 @@
                 <div class="modal-body">
                     <p>Правохоронні органи України відіграють ключову роль у протидії насильству, але стикаються з викликами.</p>
                     <h6>Поліція</h6>
-                    <p>Реагує на виклики через 102, виносить заборонні приписи. Проблеми: недостатня підготовка, упередженість.</p>
+                    <p>Реагує на виклики через 102,прибуваючи на місце події для оцінки ситуації. Поліцейські можуть видавати термінові заборонні приписи кривдникам на строк до 10 діб, що забороняють контакт із жертвою чи перебування в спільному помешканні, а також затримувати кривдника в разі загрози життю чи здоров’ю. Поліція документує випадки, проводить досудове розслідування кримінальних проваджень, веде облік кривдників, проводить превентивні бесіди та співпрацює з соціальними службами.</p>
                     <h6>Прокуратура</h6>
-                    <p>Розслідує резонансні справи, співпрацює з МКС. Проблеми: бюрократія, корупція.</p>
+                    <p>Здійснює нагляд за дотриманням законності під час розслідування випадків насильства. Прокурори контролюють дії поліції, забезпечуючи належне документування та кваліфікацію злочинів, таких як домашнє насильство (стаття 126-1 Кримінального кодексу України) чи тілесні ушкодження. Вони підтримують державне обвинувачення в судах, представляючи інтереси жертв і держави, та стежать за виконанням судових рішень, зокрема обмежувальних приписів. Прокуратура також координує міжвідомчу взаємодію, сприяючи ефективному розслідуванню складних справ, наприклад, тих, що стосуються сексуального насильства чи насильства проти дітей.</p>
                     <h6>Суди</h6>
-                    <p>Виносять вироки, але процеси затягуються через перевантаженість і корупцію.</p>
-                    <h6>Соціальні служби</h6>
-                    <p>Надають притулки, психологічну підтримку. Проблеми: обмежене фінансування.</p>
+                    <p>Розглядають справи, пов’язані з насильством, і виносять рішення про обмежувальні приписи терміном до 6 місяців, що обмежують дії кривдника, наприклад, забороняють наближення до жертви. Судді також розглядають кримінальні провадження, виносячи вироки за злочини, пов’язані з насильством, та адміністративні справи, застосовуючи штрафи чи громадські роботи за статтею 173-2 Кодексу України про адміністративні правопорушення.</p>
+                    <h6>Органи соціального захисту населення </h6>
+                    <p>Координують надання консультацій, юридичної підтримки та направлення постраждалих до притулків. Соціальні працівники розробляють індивідуальні плани реабілітації для жертв, які включають психологічну підтримку й допомогу з працевлаштуванням, а також відстежують виконання обмежувальних приписів і корекційних програм для кривдників. Вони співпрацюють із місцевими громадами для створення безпечного середовища для постраждалих і забезпечення їхньої соціальної реінтеграції.</p>
+                    <h6>Міністерство соціальної політики</h6>
+                    <p>розробляє державні програми, спрямовані на запобігання насильству, зокрема "Національний план дій з виконання Стамбульської конвенції до 2027 року". Воно сприяє створенню притулків, кризових центрів і спеціалізованих служб підтримки, а також виділяє кошти на соціальні послуги та навчання фахівців, забезпечуючи інфраструктуру для захисту жертв.</p>
+                    <h6>Міністерство охорони здоров’я </h6>
+                    <p>забезпечує медичну допомогу жертвам насильства, включаючи психологічну підтримку та реабілітацію. Лікарі зобов’язані повідомляти про випадки насильства, виявлені під час медичних оглядів, і надавати постраждалим інформацію про доступні ресурси та послуги. Міністерство також проводить навчання медичних працівників щодо виявлення та реагування на випадки насильства.</p>
+                    <h6>Міністерство освіти і науки</h6>
+                    <p>забезпечує навчання вчителів і вихователів щодо виявлення та реагування на випадки насильства серед дітей. Воно розробляє програми профілактики насильства в навчальних закладах, сприяючи формуванню безпечного середовища для учнів. Міністерство також співпрацює з органами соціального захисту для забезпечення підтримки дітей, які стали жертвами насильства.</p>
+                    <h6>Місцеві органи влади</h6>
+                    <p>координують діяльність усіх учасників системи протидії насильству на місцевому рівні. Вони забезпечують фінансування соціальних програм, організовують навчання для фахівців і контролюють виконання державних програм у своїх регіонах. Місцеві органи влади також сприяють створенню безпечного середовища для жертв насильства, залучаючи громаду до вирішення цієї проблеми.</p>
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
@@ -765,7 +1688,7 @@
 
     <section class="container project-container">
         <div class="project-section">
-            <h2>Робота проекту</h2>
+            <h2 class="project-title">Робота проекту</h2>
             <div class="card-grid">
                 <div class="col-md-3"><div class="card card-topic"><img src="https://via.placeholder.com/200x200/0057b7/ffd700?text=Закони+України" alt="Закони України" data-bs-toggle="modal" data-bs-target="#lawsModal" loading="lazy"><div class="card-body"><h5 class="card-title">Закони України</h5></div></div></div>
                 <div class="col-md-3"><div class="card card-topic"><img src="https://via.placeholder.com/200x200?text=Презентація+114+групи" alt="Презентація 114 групи" data-bs-toggle="modal" data-bs-target="#presentationModal" loading="lazy"><div class="card-body"><h5 class="card-title">Презентація 114 групи</h5></div></div></div>
@@ -791,239 +1714,383 @@
         </div>
     </section>
 
-    <section class="container py-5">
-        <h2 class="text-center mb-4" style="font-size: 1.5rem; color: #ffffff; font-family: 'Montserrat', sans-serif;">Учасники проекту</h2>
-        <div class="row g-4">
-            <div class="col-12">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Швалюк+Дмитро" alt="Швалюк Дмитро" data-bs-toggle="modal" data-bs-target="#participantModal1" loading="lazy"><div class="card-body"><h5 class="card-title">Швалюк Дмитро</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Журавель+Владислав" alt="Журавель Владислав" data-bs-toggle="modal" data-bs-target="#participantModal2" loading="lazy"><div class="card-body"><h5 class="card-title">Журавель Владислав</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Снігур+Павло" alt="Снігур Павло" data-bs-toggle="modal" data-bs-target="#participantModal3" loading="lazy"><div class="card-body"><h5 class="card-title">Снігур Павло</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Колосенко+Марія" alt="Колосенко Марія" data-bs-toggle="modal" data-bs-target="#participantModal4" loading="lazy"><div class="card-body"><h5 class="card-title">Колосенко Марія</h5></div></div></div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Чередниченко+Артем" alt="Чередниченко Артем" data-bs-toggle="modal" data-bs-target="#participantModal5" loading="lazy"><div class="card-body"><h5 class="card-title">Чередниченко Артем</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Мороз+Анастасія" alt="Мороз Анастасія" data-bs-toggle="modal" data-bs-target="#participantModal6" loading="lazy"><div class="card-body"><h5 class="card-title">Мороз Анастасія</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Камінська+Яна" alt="Камінська Яна" data-bs-toggle="modal" data-bs-target="#participantModal7" loading="lazy"><div class="card-body"><h5 class="card-title">Камінська Яна</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Ховращук+Роман" alt="Ховращук Роман" data-bs-toggle="modal" data-bs-target="#participantModal8" loading="lazy"><div class="card-body"><h5 class="card-title">Ховращук Роман</h5></div></div></div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Кучинська+Альбіна" alt="Кучинська Альбіна" data-bs-toggle="modal" data-bs-target="#participantModal9" loading="lazy"><div class="card-body"><h5 class="card-title">Кучинська Альбіна</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Нечай+Вадим" alt="Нечай Вадим" data-bs-toggle="modal" data-bs-target="#participantModal10" loading="lazy"><div class="card-body"><h5 class="card-title">Нечай Вадим</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Чєрнеуцан+Валерія" alt="Чєрнеуцан Валерія" data-bs-toggle="modal" data-bs-target="#participantModal11" loading="lazy"><div class="card-body"><h5 class="card-title">Чєрнеуцан Валерія</h5></div></div></div>
-                    <div class="col"><div class="card card-participant"><img src="https://via.placeholder.com/200x200?text=Ребдело+Микола" alt="Ребдело Микола" data-bs-toggle="modal" data-bs-target="#participantModal12" loading="lazy"><div class="card-body"><h5 class="card-title">Ребдело Микола</h5></div></div></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <div class="modal fade" id="participantModal1" tabindex="-1" aria-labelledby="participantModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel1">Швалюк Дмитро</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Дмитро координував групу, аналізував правові аспекти та збирав статистику за 2023 рік.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/dmytro.jpg" alt="Швалюк Дмитро" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Швалюк Дмитро</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Дмитро Швалюк підготував ґрунтовну доповідь про домашнє насильство, яка стала основою для розуміння правових і соціальних аспектів цієї проблеми. У своїй роботі він чітко визначив домашнє насильство, посилаючись на ст. 126-1 Кримінального кодексу України, та пояснив, що воно відрізняється від загального насильства спрямованістю на членів сім’ї чи близьких осіб. Дмитро детально описав чотири форми насильства — фізичне, сексуальне, психологічне та економічне — із конкретними прикладами проявів, такими як побої, примус до проституції, шантаж чи позбавлення їжі.
+
+Крім того, він висвітлив роль держави у протидії домашньому насильству, наголосивши на положеннях Конституції України (ст. 3) про захист життя, здоров’я та гідності. Особливу увагу Дмитро приділив діяльності Національної поліції, яка, за Законом України «Про Національну поліцію», запобігає та протидіє насильству. Він навів вражаючу статистику за 2023 рік: 244 тисячі звернень до поліції щодо домашнього насильства, що підкреслює масштаб проблеми. Також Дмитро пояснив повноваження поліції, зокрема право проникнення до житла без судового рішення в екстрених випадках (ст. 30 Конституції), та описав спеціалізовані підрозділи поліції, які реагують на такі злочини.
+
+На завершення він роз’яснив адміністративну (ст. 173-2 КУпАП) та кримінальну (ст. 126-1 КК) відповідальність за домашнє насильство, деталізуючи штрафи, громадські роботи, арешт чи позбавлення волі. Його матеріал є фундаментальним для сайту, ідеально підходячи для розділів «Що таке домашнє насильство» та «Правові аспекти», а також може бути основою для просвітницьких текстів, які підвищують обізнаність аудиторії.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal2" tabindex="-1" aria-labelledby="participantModalLabel2" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel2">Журавель Владислав</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Владислав аналізував законодавство та розробив пропозиції для презентації.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/vladyslav.jpg" alt="Журавель Владислав" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Журавель Владислав</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Владислав Журавель зосередився на аналізі державних органів, які борються з насильством, створивши структурований огляд їхніх функцій і законодавчої бази. Він розпочав із пояснення правових основ, посилаючись на статті Конституції України (3, 27, 28, 52), які гарантують захист життя, здоров’я, гідності та забороняють насильство, зокрема над дітьми. Також він зазначив, що відповідальність за насильство регулюється Кримінальним кодексом та Кодексом про адміністративні правопорушення.
+
+Основна частина його роботи присвячена п’яти ключовим органам, які прямо чи опосередковано протидіють насильству:
+
+Національна поліція: Забезпечує громадський порядок, захищає права людини та бореться зі злочинністю, що включає протидію насильству.
+Державне бюро розслідувань (ДБР): Розслідує злочини, вчинені високопосадовцями, суддями чи правоохоронцями, сприяючи притягненню до відповідальності за насильницькі дії.
+Служба безпеки України (СБУ): Захищає національну безпеку, зокрема від насильницьких дій агресора, таких як тероризм чи підривна діяльність.
+Збройні сили України (ЗСУ): Стримують зовнішню агресію, захищаючи народ від насильства з боку ворога.
+Національна гвардія: Охороняє громадський порядок, бере участь у припиненні конфліктів і захисті громадян.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal3" tabindex="-1" aria-labelledby="participantModalLabel3" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel3">Снігур Павло</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Павло досліджував адміністративну відповідальність та резонансні кейси.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/pavlo.jpg" alt="Снігур Павло" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Снігур Павло</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Павло Снигур підготував детальний матеріал про адміністративну відповідальність за вчинення насильства, зробивши акцент на правових наслідках і реальних прикладах. Він пояснив, що адміністративна відповідальність настає за менш тяжкі правопорушення, ніж злочини, і застосовується, коли насильство не має ознак кримінального злочину, наприклад, при перших випадках або в побутових ситуаціях. Павло послався на Кодекс України про адміністративні правопорушення (ст. 173-2), описавши покарання: штрафи (170–680 грн), громадські роботи (30–40 годин) або арешт (до 10 діб). Він також роз’яснив поняття термінового заборонного припису, який поліція може застосовувати для захисту жертви.
+
+Павло перелічив чотири види насильства (фізичне, психологічне, економічне, сексуальне) та пояснив, що тяжке чи систематичне насильство підпадає під кримінальну відповідальність (ст. 126-1 КК). Особливу цінність його роботі надають приклади відомих випадків насильства:
+
+Справа Харві Вайнштейна (США): засудження до 23 років за сексуальні злочини.
+Справа в Кагарлику (Україна, 2020): зґвалтування у поліції, реальні строки для винних.
+Джиммі Савіл (Велика Британія): посмертне викриття сексуального насильства.
+Білл Косбі (США): засудження, хоча вирок частково скасовано.
+Справа в Золочеві (Україна, 2021): групове зґвалтування, 5–7 років ув’язнення.
+Ці кейси ілюструють, що навіть впливові особи несуть покарання, що мотивує жертв звертатися по допомогу. Матеріал Павла ідеально підходить для розділу сайту про відповідальність за насильство, а приклади можуть бути використані для створення емоційно зарядженого контенту, який підкреслює важливість справедливості.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal4" tabindex="-1" aria-labelledby="participantModalLabel4" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel4">Колосенко Марія</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Марія досліджувала форми насильства та розробила рекомендації.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/maria.jpg" alt="Колосенко Марія" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Колосенко Марія</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Марія Колосенко підготувала лаконічний і доступний матеріал про форми домашнього насильства, який вирізняється чіткою структурою та простотою викладу. Вона виділила чотири основні форми насильства — фізичне, сексуальне, психологічне та економічне — і для кожної надала:
+
+Визначення: Наприклад, фізичне насильство — це побої, штовхання чи примус до вживання алкоголю.
+Прояви: Конкретні дії, такі як ляпаси, примус до проституції, словесні образи чи позбавлення їжі.
+Марія завершила свій матеріал закликом до дії: «Якщо ви чи ваші знайомі зазнають насильства, телефонуйте 102!». Її текст є ідеальним для широкої аудиторії, оскільки написаний простою мовою та має чіткий меседж. На сайті цей матеріал може бути використаний для створення інфографіки, слайдів або коротких інформаційних блоків у розділі «Форми насильства». Завдяки компактності та зрозумілості він підходить для просвітницьких матеріалів, які легко сприймаються навіть людьми без юридичних знань.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal5" tabindex="-1" aria-labelledby="participantModalLabel5" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel5">Чередниченко Артем</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Артем досліджував напад на активістку та створив слайди.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/artem.jpg" alt="Чередниченко Артем" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Чередниченко Артем</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Артем Чередниченко підготував детальний опис нападу на громадську активістку Наталію Ешонкулову в Дніпрі (2021), підкресливши проблему насильства проти активістів. Він описав обставини інциденту: напад у тамбурі квартири, тяжкі травми (струс мозку, перелом носа), а також зв’язок із діяльністю активістки проти карантинних обмежень і рейдерства. Артем детально висвітлив дії залучених структур:
+
+Національна поліція: Кваліфікувала напад як замах на вбивство (ст. 115 КК), затримала трьох підозрюваних.
+Прокуратура: Підготувала обвинувальний акт, вимагала максимального покарання.
+Суд: У 2023 році виніс вирок — 11 років ув’язнення кожному та 300 тис. грн компенсації.
+Медичні служби: Надали допомогу та докази для суду.
+Громадські організації та ЗМІ: Забезпечили розголос і тиск на правоохоронців.
+Артем підкреслив суспільний резонанс і системну проблему безпеки активістів, посилаючись на схожі випадки, як напад на Катерину Гандзюк. Його матеріал є цінним для розділу «Реальні історії» на сайті, оскільки ілюструє, як насильство проти активістів може бути покаране завдяки зусиллям правоохоронців і громадськості. Кейс також мотивує жертв боротися за справедливість.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal6" tabindex="-1" aria-labelledby="participantModalLabel6" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel6">Мороз Анастасія</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Анастасія досліджувала справу Оксани Макар та готувала матеріали.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/anastasiia.jpg" alt="Мороз Анастасія" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Мороз Анастасія</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Анастасія Мороз підготувала вичерпний аналіз резонансного вбивства Оксани Макар (2012, Миколаїв), яке стало символом боротьби з насильством в Україні. Вона описала обставини злочину: зґвалтування, спробу вбивства та підпал 18-річної дівчини трьома нападниками (Краснощок, Погосян, Присяжнюк). Анастасія надала біографічні дані жертви та злочинців, підкресливши їхні мотиви — сексуальне насильство та приховування злочину.
+
+Вона детально висвітлила дії правоохоронних органів:
+
+Поліція: Спочатку неналежно розслідувала справу, відпустивши двох підозрюваних через корупційні зв’язки, але під тиском громадськості затримала всіх.
+Прокуратура: Переглянула запобіжні заходи, підготувала обвинувачення.
+Суд: Присудив покарання та 1 млн грн компенсації матері жертви.
+Анастасія підкреслила роль ЗМІ, громадськості та президента Януковича, які змусили систему діяти. Справа стала поштовхом до реформ у правоохоронній системі та підвищила увагу до насильства над жінками. Її матеріал ідеально підходить для розділу «Резонансні кейси» на сайті, демонструючи, як суспільний тиск може забезпечити справедливість.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal7" tabindex="-1" aria-labelledby="participantModalLabel7" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel7">Камінська Яна</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Яна розробила план безпеки та редагувала презентацію.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/yana.jpg" alt="Камінська Яна" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Камінська Яна</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Яна Камінська створила практичний і орієнтований на жертви матеріал про домашнє насильство, який поєднує юридичну інформацію та поради щодо безпеки. Вона дала чітке визначення домашнього насильства за законом, охопивши фізичне, сексуальне, психологічне та економічне насильство. Яна пояснила циклічність насильства (сварка, агресія, заспокоєння) та перелічила осіб, яких воно може стосуватися (родичі, подружжя, опікуни).
+
+Особливо цінним є її детальний план безпеки для жертв, розділений на три етапи:
+
+Підготовчий: Збір документів, грошей, пошук прихистку.
+Критичний: Уникнення конфлікту, виклик поліції (102), подання сигналу небезпеки.
+Посткритичний: Фіксація насильства, зміна контактів і маршрутів.
+Для сімей із дітьми Яна додала поради щодо їхньої безпеки. Вона також описала адміністративну та кримінальну відповідальність, повноваження поліції (наприклад, терміновий заборонний припис на 10 діб), і навела контакти гарячих ліній (102, 15-47, 0 800 213 103) та email для правової допомоги. Її матеріал є ідеальним для розділу «Допомога жертвам» на сайті, оскільки надає практичні інструменти та ресурси для тих, хто зазнає насильства.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="participantModal8" tabindex="-1" aria-labelledby="participantModalLabel8" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel8">Ховращук Роман</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Роман досліджував вбивство Артема Мірошниченка та готував тексти.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/roman.jpg" alt="Ховращук Роман" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Ховращук Роман</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Роман Ховращук підготував детальний опис вбивства проукраїнського активіста Артема Мірошниченка в Бахмуті (2019), підкресливши проблему насильства на ґрунті мовної та національної ворожнечі. Він описав обставини злочину: напад двох неповнолітніх (Барабаш і Баришок) на активіста через його українську мову, що призвело до смерті від травм. Роман висвітлив дії правоохоронних органів:
+
+Поліція: Затримала підозрюваних, перекваліфікувала справу після смерті жертви.
+Прокуратура: Підтримувала обвинувачення.
+Суд: У 2024 році виніс вирок (9 і 8 років ув’язнення), але у 2025 році нападників умовно звільнили для служби в ЗСУ, що викликало обурення.
+Роман підкреслив суспільний резонанс, акції протесту («Убитий за мову») та критику за м’якість покарання. Він також навів надійні джерела (helsinki.org.ua, glavcom.ua). Його матеріал підходить для розділу «Кейси» на сайті, ілюструючи проблему насильства проти активістів і недоліки судової системи.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="participantModal9" tabindex="-1" aria-labelledby="participantModalLabel9" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel9">Кучинська Альбіна</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Альбіна створила презентацію та досліджувала економічне насильство.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/albina.jpg" alt="Кучинська Альбіна" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Кучинська Альбіна</div>
+                            <h6>Внесок у проект</h6>
+                            <p>Альбіна Кучинська підготувала візуальний контент для проекту.Вона зробила презентацію яка подробно розкриває роботу кожного з учасників,та структурує всю надану учасниками інформацію.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="participantModal10" tabindex="-1" aria-labelledby="participantModalLabel10" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel10">Нечай Вадим</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Вадим досліджував психологічне насильство та пропонував ідеї підтримки.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/vadym.jpg" alt="Нечай Вадим" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Нечай Вадим</div>
+                            <h6>Внесок у проект</h6>
+                            <p>
+                                Вадим Нечай займався аналізом психологічного насильства та його впливу на жертв. Він підготував блок про ознаки психологічного тиску, розробив поради для самодопомоги та зібрав контакти організацій, які надають психологічну підтримку. Вадим також створив інфографіку для розділу "Психологічна допомога" та допоміг адаптувати матеріали для молодіжної аудиторії.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal11" tabindex="-1" aria-labelledby="participantModalLabel11" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel11">Чєрнеуцан Валерія</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Валерія досліджувала сексуальне насильство та готувала слайди.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/valeriia.jpg" alt="Чєрнеуцан Валерія" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Чєрнеуцан Валерія</div>
+                            <h6>Внесок у проект</h6>
+                            <p>
+                                Валерія Чєрнеуцан досліджувала тему сексуального насильства та підготувала розділ про захист прав жертв. Вона зібрала інформацію про міжнародний досвід, описала алгоритм дій для постраждалих та підготувала рекомендації для підлітків щодо безпечної поведінки. Валерія також брала участь у створенні презентації та розробила інтерактивний тест для підвищення обізнаності.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="participantModal12" tabindex="-1" aria-labelledby="participantModalLabel12" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content">
+            <div class="modal-content participant-modal-custom">
                 <div class="modal-header">
                     <h5 class="modal-title" id="participantModalLabel12">Ребдело Микола</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h6>Внесок у проект</h6>
-                    <p>Микола досліджував роль освіти та готував рекомендації для шкіл.</p>
+                <div class="modal-body participant-modal-body">
+                    <div class="participant-modal-flex">
+                        <img src="img/participants/mykola.jpg" alt="Ребдело Микола" class="participant-modal-photo" onerror="this.style.display='none'">
+                        <div>
+                            <div class="participant-modal-name">Ребдело Микола</div>
+                            <h6>Внесок у проект</h6>
+                            <p>
+                                Микола Ребдело відповідав за освітній напрямок. Він підготував матеріали для шкіл щодо профілактики насильства, розробив сценарії для класних годин і тренінгів, а також створив пам’ятки для учнів і вчителів. Микола організував збір сучасних методик протидії булінгу та допоміг адаптувати інформацію для різних вікових груп.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left"></i> Повернутися назад
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <button id="colorThemeBtn" class="control-button theme-button" style="bottom: 1rem; right: 1rem; z-index: 2003;" title="Вибір кольору/градієнта">
+        <i class="fas fa-palette"></i>
+    </button>
+    <div id="colorControlPanel" style="position: fixed; bottom: 5.5rem; right: 1.5rem; z-index: 2002; display: none; flex-direction: column; align-items: flex-end; gap: 0.7rem; background: rgba(255,255,255,0.97); border-radius: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.15); padding: 1rem 1.2rem;">
+        <label for="gradientPicker" style="color:#0057b7;font-weight:600;font-size:1rem;">Тема:</label>
+        <select id="gradientPicker" style="border-radius:0.5rem;padding:0.3rem 0.7rem;min-width:160px;">
+            <option value="blue-yellow">Синьо-жовтий</option>
+            <option value="teal-yellow">Бірюзово-жовтий</option>
+            <option value="custom">Свій колір</option>
+        </select>
+        <input type="color" id="colorPicker" style="width:2.5rem;height:2.5rem;border:none;outline:none;cursor:pointer;display:none;">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1212,6 +2279,204 @@
 
         // Початковий рендер
         renderMainChart();
+
+        // Sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Закривати sidebar при кліку поза ним (опціонально)
+        document.addEventListener('click', (e) => {
+            if (
+                sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                e.target !== sidebarToggle
+            ) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Виділення учасника при кліку
+        document.querySelectorAll('.sidebar-list li').forEach(li => {
+            li.addEventListener('click', function(e) {
+                document.querySelectorAll('.sidebar-list li').forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Не закривати sidebar при закритті модального вікна учасника
+        document.querySelectorAll('.modal.fade[id^="participantModal"]').forEach(modal => {
+            modal.addEventListener('hidden.bs.modal', function () {
+                // Не знімаємо selected з .sidebar-list li і не закриваємо sidebar
+                // (нічого не робимо тут)
+            });
+        });
+
+        // Кастомний вибір кольору/градієнта (оновлено, з підтримкою модальних вікон)
+        const colorPicker = document.getElementById('colorPicker');
+        const gradientPicker = document.getElementById('gradientPicker');
+
+        function setGradient(gradient) {
+            document.body.classList.remove('custom-bg');
+            document.body.style.removeProperty('--modal-bg');
+            document.body.style.removeProperty('--modal-color');
+            if (gradient === 'blue-yellow') {
+                document.body.className = 'blue-yellow';
+                document.body.style.background = 'linear-gradient(135deg, #0057b7 0%, #80deea 30%, #ffd700 60%, #003087 100%)';
+            } else if (gradient === 'teal-yellow') {
+                document.body.className = 'teal-yellow day-mode';
+                document.body.style.background = 'linear-gradient(135deg, #26A69A 0%, #80CBC4 30%, #FFCA28 60%, #00897B 100%)';
+            }
+        }
+
+        gradientPicker.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                colorPicker.style.display = 'inline-block';
+                colorPicker.click();
+            } else {
+                colorPicker.style.display = 'none';
+                setGradient(this.value);
+            }
+        });
+        colorPicker.addEventListener('input', function() {
+            document.body.classList.add('custom-bg');
+            document.body.style.background = this.value;
+            document.body.style.setProperty('--modal-bg', this.value);
+            // Для контрасту тексту в модальному: якщо фон світлий — текст темний, якщо темний — текст світлий
+            let rgb = window.getComputedStyle(document.body).backgroundColor.match(/\d+/g);
+            let brightness = rgb ? (Number(rgb[0]) * 299 + Number(rgb[1]) * 587 + Number(rgb[2]) * 114) / 1000 : 0;
+            document.body.style.setProperty('--modal-color', brightness > 180 ? '#222' : '#fff');
+            gradientPicker.value = 'custom';
+        });
+
+        // Початковий фон
+        if (document.body.classList.contains('day-mode')) {
+            setGradient('teal-yellow');
+            gradientPicker.value = 'teal-yellow';
+        } else {
+            setGradient('blue-yellow');
+            gradientPicker.value = 'blue-yellow';
+        }
+        colorPicker.style.display = 'none';
+
+        // Переносимо вибір кольору/градієнта у popup справа знизу
+        const colorThemeBtn = document.getElementById('colorThemeBtn');
+        const colorControlPanel = document.getElementById('colorControlPanel');
+        colorThemeBtn.addEventListener('click', () => {
+            colorControlPanel.style.display = colorControlPanel.style.display === 'flex' ? 'none' : 'flex';
+        });
+        // Закривати панель при кліку поза нею
+        document.addEventListener('click', (e) => {
+            if (
+                colorControlPanel.style.display === 'flex' &&
+                !colorControlPanel.contains(e.target) &&
+                e.target !== colorThemeBtn &&
+                e.target !== gradientPicker &&
+                e.target !== colorPicker
+            ) {
+                colorControlPanel.style.display = 'none';
+            }
+        });
+
+        // Динамічна дата і час під заголовком (замість статичного <p>)
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateP = document.getElementById('currentTime');
+            function updateDateTime() {
+                const now = new Date();
+                const options = {
+                    year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                };
+                dateP.textContent = `Зараз: ${now.toLocaleDateString('uk-UA', options)} ${now.toLocaleTimeString('uk-UA', options)}`;
+            }
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
+
+        // Оновлений скрипт для часу: не додає дубльований текст
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateP = document.getElementById('currentTime');
+            function updateDateTime() {
+                const now = new Date();
+                const options = {
+                    year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                };
+                dateP.textContent = `Зараз: ${now.toLocaleDateString('uk-UA', options)} ${now.toLocaleTimeString('uk-UA', options)}`;
+            }
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
+
+        // Оновлення градієнта заголовка при зміні теми/кольору
+        function updateHeaderGradient() {
+            const h1 = document.querySelector('header h1');
+            if (document.body.classList.contains('blue-yellow')) {
+                h1.style.background = 'linear-gradient(45deg, #0057b7, #ffd700, #003087)';
+            } else if (document.body.classList.contains('teal-yellow') || document.body.classList.contains('day-mode')) {
+                h1.style.background = 'linear-gradient(45deg, #00897B, #FFD54F, #26A69A)';
+            } else if (document.body.classList.contains('custom-bg')) {
+                const custom = getComputedStyle(document.body).getPropertyValue('--modal-bg') || '#333';
+                h1.style.background = `linear-gradient(45deg, ${custom}, #FFD54F, #26A69A)`;
+            }
+        }
+        document.body.addEventListener('classChange', updateHeaderGradient);
+        updateHeaderGradient();
+
+        // Якщо ви змінюєте тему через JS, додайте після зміни:
+        const observer = new MutationObserver(updateHeaderGradient);
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+
+        // --- Видалити показ часу ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeP = document.getElementById('currentTime');
+            if (timeP) timeP.remove();
+        });
+
+        // --- Динамічний градієнт логотипу під тему/колір ---
+        function updateLogoGradient() {
+            const h1 = document.getElementById('mainLogo');
+            if (!h1) return;
+            if (document.body.classList.contains('blue-yellow')) {
+                h1.style.background = 'linear-gradient(45deg, #0057b7, #ffd700, #003087)';
+            } else if (document.body.classList.contains('teal-yellow') || document.body.classList.contains('day-mode')) {
+                h1.style.background = 'linear-gradient(45deg, #00897B, #FFD54F, #26A69A)';
+            } else if (document.body.classList.contains('red-black')) {
+                h1.style.background = 'linear-gradient(45deg, #4b0000, #ff3333, #2a2a2a)';
+            } else if (document.body.classList.contains('green-black')) {
+                h1.style.background = 'linear-gradient(45deg, #003300, #26A69A, #2a2a2a)';
+            } else if (document.body.classList.contains('custom-bg')) {
+                const custom = getComputedStyle(document.body).getPropertyValue('--modal-bg') || '#333';
+                h1.style.background = `linear-gradient(45deg, ${custom}, #FFD54F, #26A69A)`;
+            }
+        }
+        updateLogoGradient();
+        const observerLogo = new MutationObserver(updateLogoGradient);
+        observerLogo.observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+
+        // --- Перемикач тем: інверсія вибраної теми ---
+        // (modeButton вже оголошено вище)
+        modeButton.addEventListener('click', () => {
+            // Якщо зараз світла — робимо темну, якщо темна — робимо світлу, але зберігаємо вибрану тему
+            if (document.body.classList.contains('day-mode')) {
+                document.body.classList.remove('day-mode');
+                if (document.body.classList.contains('teal-yellow')) document.body.classList.remove('teal-yellow');
+                if (!document.body.className) document.body.className = 'blue-yellow';
+            } else {
+                document.body.classList.add('day-mode');
+                if (document.body.classList.contains('blue-yellow')) {
+                    document.body.classList.remove('blue-yellow');
+                    document.body.classList.add('teal-yellow');
+                }
+            }
+            modeButton.querySelector('i').classList.toggle('fa-moon');
+            modeButton.querySelector('i').classList.toggle('fa-sun');
+            updateLogoGradient();
+        });
     </script>
 </body>
 </html>
