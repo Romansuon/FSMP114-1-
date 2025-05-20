@@ -1556,7 +1556,7 @@
         .stats-section {
             max-width: 1400px !important;
             width: 99% !important;
-            padding: 3.5rem 3rem 3рем 3рем;
+            padding: 3.5rem 3рем 3рем 3рем;
         }
         @media (max-width: 900px) {
             .stats-section { max-width: 100% !important; padding: 1.5rem 0.5rem; }
@@ -1820,6 +1820,21 @@
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#statsModal" style="font-size:1.2рем;padding:1рем 2рем;margin:2рем auto;">
                 <i class="fas fa-chart-bar"></i> Переглянути статистику проекту
             </button>
+        </div>
+        <!-- ДОДАЙТЕ ЦЕЙ БЛОК ПІД stats-section (листівка проекту) -->
+        <div class="project-leaflet" style="margin:2rem auto 3rem auto;max-width:800px;padding:2rem 2.5rem 2.5rem 2.5rem;border-radius:1.5rem;box-shadow:0 4px 24px rgba(0,87,183,0.13);background:rgba(0,87,183,0.08);text-align:center;transition:background 0.4s,color 0.4s;">
+            <h3 style="font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:700;color:#FFCA28;margin-bottom:1.2rem;">Про проект</h3>
+            <p style="font-size:1.15rem;color:#222;margin-bottom:1.2rem;">
+                Цей сайт створено студентами <b>114 групи ФСМП</b> для підвищення обізнаності щодо проблеми домашнього насильства в Україні.<br>
+                Ми зібрали актуальні закони, статистику, корисні контакти та інформацію про роботу державних органів.<br>
+                Мета проекту — допомогти постраждалим знайти підтримку, а суспільству — краще зрозуміти масштаби проблеми та шляхи її вирішення.
+            </p>
+            <div style="margin-bottom:1.2rem;">
+                <b>Автори:</b> студенти 114 групи ФСМП (Швалюк Дмитро, Журавель Владислав, Снігур Павло, Колосенко Марія, Чередниченко Артем, Мороз Анастасія, Камінська Яна, Ховращук Роман, Кучинська Альбіна, Нечай Вадим, Чєрнеуцан Валерія, Ребдело Микола)
+            </div>
+            <div style="margin-bottom:0.7rem;">
+                <b>Зв'язатися з нами:</b> <a href="mailto:fsmp114@gmail.com" style="color:#0057b7;text-decoration:underline;font-weight:500;">fsmp114@gmail.com</a>
+            </div>
         </div>
     </section>
 
@@ -2114,13 +2129,13 @@
 
 <!-- МОДАЛЬНЕ ВІКНО: Статистика проекту (зроблено робочим) -->
 <div class="modal fade" id="statsModal" tabindex="-1" aria-labelledby="statsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 700px; width: 98%;">
+    <div class="modal-dialog" style="max-width: 800px; width: 98%;">
         <div class="modal-content participant-modal-custom">
             <div class="modal-header">
                 <h5 class="modal-title" id="statsModalLabel">Статистика проекту</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="max-height: 800px; min-height: 500px; overflow-y: auto;">
+            <div class="modal-body" style="max-height: 900px; min-height: 500px; overflow-y: auto;">
                 <div class="chart-buttons mb-3">
                     <button class="chart-type-btn active" data-type="bar">Стовпчикова</button>
                     <button class="chart-type-btn" data-type="pie">Кругова</button>
@@ -2134,9 +2149,9 @@
                     <button class="chart-subject-btn" data-subject="criminal">Кримінальні справи</button>
                     <button class="chart-subject-btn" data-subject="organs">Органи</button>
                 </div>
-                <div class="chart-slider" style="width:100%;max-width:420px;margin:0 auto 2rem auto;">
+                <div class="chart-slider" style="width:100%;max-width:600px;margin:0 auto 2rem auto;">
                     <button class="chart-arrow left" aria-label="Попередня"><i class="fas fa-chevron-left"></i></button>
-                    <div class="chart-container" style="background:rgba(255,255,255,0.22);box-shadow:0 8px 32px rgba(0,87,183,0.13);border:2.5px solid #FFCA28;border-radius:1.5rem;padding:1rem 0.5rem;">
+                    <div class="chart-container" style="background:rgba(255,255,255,0.22);box-shadow:0 8px 32px rgba(0,87,183,0.13);border:2.5px solid #FFCA28;border-radius:1.5rem;padding:1.5rem 0.5rem;">
                         <canvas id="mainChart"></canvas>
                     </div>
                     <button class="chart-arrow right" aria-label="Наступна"><i class="fas fa-chevron-right"></i></button>
@@ -2145,6 +2160,71 @@
                     <strong id="captionTitle">Кількість звернень щодо домашнього насильства в Україні (2021–2023):</strong>
                     <br>
                     <span id="captionData"></span>
+                </div>
+                <!-- Додаткові детальні блоки -->
+                <div class="stat-highlights" style="display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;margin-bottom:2rem;">
+                    <div style="background:rgba(0,87,183,0.09);border-radius:1rem;padding:1.2rem 2rem;min-width:180px;box-shadow:0 2px 8px rgba(0,87,183,0.08);text-align:center;">
+                        <div style="font-size:2.2rem;font-weight:700;color:#FFCA28;">+23%</div>
+                        <div style="font-size:1rem;color:#00897B;">Зростання звернень<br>2021–2023</div>
+                    </div>
+                    <div style="background:rgba(255,202,40,0.09);border-radius:1rem;padding:1.2rem 2rem;min-width:180px;box-shadow:0 2px 8px rgba(255,202,40,0.08);text-align:center;">
+                        <div style="font-size:2.2рем;font-weight:700;color:#0057b7;">80%</div>
+                        <div style="font-size:1rem;color:#333;">Жінки серед постраждалих</div>
+                    </div>
+                    <div style="background:rgba(38,166,154,0.09);border-radius:1rem;padding:1.2рем 2рем;min-width:180px;box-shadow:0 2px 8px rgba(38,166,154,0.08);text-align:center;">
+                        <div style="font-size:2.2рем;font-weight:700;color:#00897B;">~10%</div>
+                        <div style="font-size:1rem;color:#333;">Діти серед постраждалих</div>
+                    </div>
+                    <div style="background:rgba(255,99,132,0.09);border-radius:1rem;padding:1.2рем 2рем;min-width:180px;box-shadow:0 2px 8px rgba(255,99,132,0.08);text-align:center;">
+                        <div style="font-size:2.2рем;font-weight:700;color:#d32f2f;">25 000</div>
+                        <div style="font-size:1rem;color:#333;">Кримінальних справ<br>2023 рік</div>
+                    </div>
+                </div>
+                <div class="stat-table" style="margin:2рем auto 1рем auto;max-width:600px;">
+                    <table class="table table-bordered table-striped" style="background:#fff;border-radius:1rem;overflow:hidden;">
+                        <thead style="background:#FFCA28;color:#0057b7;">
+                            <tr>
+                                <th>Рік</th>
+                                <th>Звернення</th>
+                                <th>Жінки</th>
+                                <th>Чоловіки</th>
+                                <th>Діти</th>
+                                <th>Кримінальні справи</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2021</td>
+                                <td>254 000</td>
+                                <td>80%</                                <td>10%</td>
+                                <td>10%</td>
+                                <td>18 000</td>
+                            </tr>
+                            <tr>
+                                <td>2022</td>
+                                <td>277 000</td>
+                                <td>80%</</td>
+                                <td>10%</td>
+                                <td>10%</td>
+                                <td>21 000</td>
+                            </tr>
+                            <tr>
+                                <td>2023</td>
+                                <td>312 000</td>
+                                <td>80%</</td>
+                                <td>10%</td>
+                                <td>10%</td>
+                                <td>25 000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="stat-sources" style="margin-top:2рем;text-align:center;font-size:1rem;">
+                    <span style="color:#888;">Джерела статистики:</span>
+                    <br>
+                    <a href="https://msp.gov.ua/news/22613.html" target="_blank" rel="noopener" style="color:#0057b7;text-decoration:underline;">Міністерство соціальної політики України</a> &nbsp;|&nbsp;
+                    <a href="https://www.unfpa.org.ua/news/za-2023-rik-kilkist-zvernen-shchodo-domashnogo-nasilstva-zrosla-na-13/" target="_blank" rel="noopener" style="color:#0057b7;text-decoration:underline;">UNFPA Україна</a> &nbsp;|&nbsp;
+                    <a href="https://www.ukrinform.ua/rubric-society/3840086-v-ukraini-za-rik-na-13-zrosla-kilkist-zvernen-z-prividu-domasnogo-nasilstva.html" target="_blank" rel="noopener" style="color:#0057b7;text-decoration:underline;">Укрінформ</a>
                 </div>
             </div>
             <div class="modal-footer">
